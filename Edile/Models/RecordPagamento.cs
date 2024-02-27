@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Edile.Models
 {
     public class RecordPagamento
     {
-
+        [HiddenInput]
         public string Id { get; set; }
 
         public string Data { get; set; }

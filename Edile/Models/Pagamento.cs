@@ -10,7 +10,7 @@ namespace Edile.Models
 {
     public class Pagamento
     {
-
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
         public DateTime Data { get; set; }
 

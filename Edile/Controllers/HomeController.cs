@@ -13,13 +13,15 @@ namespace Edile.Controllers
     public class HomeController : Controller
     {
 
+         
          static string connectionString = ConfigurationManager.ConnectionStrings["connectionStringDb"].ToString();
          SqlConnection conn = new SqlConnection(connectionString);
 
 
         public ActionResult Index()
         {
-            List<RecordPagamento> pagamenti = new List<RecordPagamento>();
+            
+            List <RecordPagamento> pagamenti = new List<RecordPagamento>();
             List<Dipendente> dipendenti = new List<Dipendente>();
 
             //-----------------PAGAMENTI------------------------------
@@ -119,25 +121,12 @@ namespace Edile.Controllers
             }
 
 
-            /*
-            if (Session["Pagamenti"] != null) {
-
-                List<Pagamento> pagamenti = (List<Pagamento>)Session["Pagamenti"];
-                return View(pagamenti);
-                //System.Diagnostics.Debug.WriteLine(variabiledaverificare)
-            }
-            else
-            {
-                
-                return View();
-            }
-
-            */
 
             Pagamenti_Lista vm = new Pagamenti_Lista();
             vm.Pagamenti = pagamenti;
             vm.Dipendenti = dipendenti;
             return View(vm);
+           
 
         }
 
@@ -154,5 +143,103 @@ namespace Edile.Controllers
 
             return View();
         }
+
+
+        [HttpGet]
+        public ActionResult EditPerson(int id) {
+
+            try
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = $"SELECT * FROM Dipendenti WHERE IdDipendente = {id}";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string IdDipendente = reader["IdDipendente"].ToString();
+                    string Nome = reader["Nome"].ToString();
+
+                    string Cognome = reader["Cognome"].ToString();
+                    string CF = reader["CF"].ToString();
+
+                    bool Coniugato = reader["Coniugato"].ToString() == "True" ? true : false;
+                    int NumFigli = int.Parse(reader["NumeroFigli"].ToString());
+                    string Mansione = reader["Mansione"].ToString();
+
+
+                    Dipendente DipendenteSelezionato = new Dipendente(IdDipendente, Nome, Cognome, CF, Coniugato, NumFigli, Mansione);
+
+                    return View(DipendenteSelezionato);
+
+
+
+                }
+                reader.Close();
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("Index");
+           // return View(DipendenteSelezionato);
+        }
+
+        [HttpPost]
+
+        public ActionResult EditPerson(Dipendente DipendenteUpdate) {
+
+            try
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = $"UPDATE Dipendenti SET Nome = @Nome, Cognome = @Cognome, CF = @CF, Coniugato = @Coniugato, NumeroFigli = @NumeroFigli, Mansione = @Mansione  WHERE IdDipendente = @ID";
+
+                cmd.Parameters.AddWithValue("@ID", DipendenteUpdate.ID);
+                cmd.Parameters.AddWithValue("@Nome", DipendenteUpdate.Nome);
+                cmd.Parameters.AddWithValue("@Cognome", DipendenteUpdate.Cognome);
+                cmd.Parameters.AddWithValue("@CF", DipendenteUpdate.CF);
+                cmd.Parameters.AddWithValue("@Coniugato", DipendenteUpdate.Coniugato);
+                cmd.Parameters.AddWithValue("@NumeroFigli", DipendenteUpdate.NumeroFigli);
+                cmd.Parameters.AddWithValue("@Mansione", DipendenteUpdate.Mansione);
+
+
+                cmd.ExecuteNonQuery();
+
+               
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
+
+    
 }

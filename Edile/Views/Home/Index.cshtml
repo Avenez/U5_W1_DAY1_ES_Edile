@@ -58,13 +58,14 @@
         {
 
             <div class="row border border-1 border-opacity-50">
-                <div class="col-2"><p>@Dipendente.ID</p></div>
-                <div class="col-2"><p>@Dipendente.Nome</p></div>
-                <div class="col-2"><p>@Dipendente.Cognome</p></div>
-                <div class="col-1"><p>@Dipendente.CF</p></div>
-                <div class="col-1"><p>@Dipendente.Coniugato</p></div>
-                <div class="col-2"><p>@Dipendente.NumeroFigli</p></div>
-                <div class="col-2"><p>@Dipendente.Mansione</p></div>
+                <div class="col"><p>@Dipendente.ID</p></div>
+                <div class="col"><p>@Dipendente.Nome</p></div>
+                <div class="col"><p>@Dipendente.Cognome</p></div>
+                <div class="col"><p>@Dipendente.CF</p></div>
+                <div class="col"><p>@Dipendente.Coniugato</p></div>
+                <div class="col"><p>@Dipendente.NumeroFigli</p></div>
+                <div class="col"><p>@Dipendente.Mansione</p></div>
+                <div class="col">@Html.ActionLink("Edit Person", "EditPerson", new {id=Dipendente.ID})</div>
             </div>
 
 

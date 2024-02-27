@@ -11,4 +11,4 @@ namespace Edile.WievModels
         public List<Dipendente> Dipendenti { get; set; }
         public List<RecordPagamento> Pagamenti { get; set; }
     }
-}
+} 
