@@ -1,0 +1,100 @@
+﻿
+@model Edile.Models.Pagamento
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Pagamento</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ammontare, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ammontare, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ammontare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Acconto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Acconto)
+                    @Html.ValidationMessageFor(model => model.Acconto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idDipendente, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idDipendente, new { htmlAttributes = new { min = 1, @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.idDipendente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-outline-success mt-2" />
+            </div>
+        </div>
+    </div>
+
+    /*
+    <section class="container" aria-labelledby="aspnetTitle">
+        <div class="row">
+            <div class="col-2"><p>Id Pagamento</p></div>
+            <div class="col-2"><p>Data</p></div>
+            <div class="col-2"><p>Ammontare</p></div>
+            <div class="col-1"><p>Acconto</p></div>
+            <div class="col-1"><p>idDipendente</p></div>
+            <div class="col-2"><p>Nome</p></div>
+            <div class="col-2"><p>Cognome</p></div>
+        </div>
+
+
+        @foreach (Edile.Models.Pagamento P in Model )
+
+        {
+
+            <div class="row border border-1 border-opacity-50">
+                <div class="col-2"><p>@P.Id</p></div>
+                <div class="col-2"><p>@P.Data</p></div>
+                <div class="col-2"><p>@P.Ammontare €</p></div>
+                <div class="col-1"><p>@P.Acconto</p></div>
+                <div class="col-1"><p>@P.idDipendente</p></div>
+            </div>
+
+
+
+        }
+
+
+
+    </section>
+    */
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
