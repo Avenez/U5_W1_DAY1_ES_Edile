@@ -1,4 +1,5 @@
 ﻿using Edile.Models;
+using Edile.WievModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,6 +20,9 @@ namespace Edile.Controllers
         public ActionResult Index()
         {
             List<RecordPagamento> pagamenti = new List<RecordPagamento>();
+            List<Dipendente> dipendenti = new List<Dipendente>();
+
+            //-----------------PAGAMENTI------------------------------
             try 
             {
                 conn.Open();
@@ -68,6 +72,52 @@ namespace Edile.Controllers
             conn.Close();
             }
 
+            //---------------DIPENDENTI--------------------------------
+            try
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT * FROM Dipendenti";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string IdDipendente = reader["IdDipendente"].ToString();
+                    string Nome = reader["Nome"].ToString();
+
+                    string Cognome = reader["Cognome"].ToString();
+                    string CF = reader["CF"].ToString().Substring(0,4);
+
+                    bool Coniugato = reader["Coniugato"].ToString() == "True" ? true : false;
+                    int NumFigli = int.Parse(reader["NumeroFigli"].ToString());
+                    string Mansione = reader["Mansione"].ToString();
+                   
+
+                    Dipendente Dipendente = new Dipendente(IdDipendente, Nome, Cognome, CF, Coniugato, NumFigli, Mansione);
+
+                    dipendenti.Add(Dipendente);
+
+
+
+                }
+                reader.Close();
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
 
             /*
             if (Session["Pagamenti"] != null) {
@@ -84,8 +134,10 @@ namespace Edile.Controllers
 
             */
 
-
-            return View(pagamenti);
+            Pagamenti_Lista vm = new Pagamenti_Lista();
+            vm.Pagamenti = pagamenti;
+            vm.Dipendenti = dipendenti;
+            return View(vm);
 
         }
 

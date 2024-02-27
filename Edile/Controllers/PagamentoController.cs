@@ -33,7 +33,7 @@ namespace Edile.Controllers
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
+                while (reader.Read())
                 {
                     int IdPagamento = int.Parse(reader["IdPagamento"].ToString());
                     DateTime Data = DateTime.Parse(reader["Data"].ToString());

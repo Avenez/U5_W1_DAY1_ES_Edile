@@ -1,41 +1,77 @@
-﻿@model List<Edile.Models.RecordPagamento>
+﻿@model Edile.WievModels.Pagamenti_Lista
 
 @{
     ViewBag.Title = "Home Page";
 }
 
 <main>
+    <h2>PAGAMENTI</h2>
     <section class="container" aria-labelledby="aspnetTitle">
-                 <div class="row">
-                    <div class="col-2"><p>Id Pagamento</p></div>
-                    <div class="col-2"><p>Data</p></div>
-                    <div class="col-2"><p>Ammontare</p></div>
-                    <div class="col-1"><p>Acconto</p></div>
-                    <div class="col-1"><p>idDipendente</p></div>
-                    <div class="col-2"><p>Nome</p></div>
-                    <div class="col-2"><p>Cognome</p></div>
-                </div>
-        
+        <div class="row">
+            <div class="col-2"><p>Id Pagamento</p></div>
+            <div class="col-2"><p>Data</p></div>
+            <div class="col-2"><p>Ammontare</p></div>
+            <div class="col-1"><p>Acconto</p></div>
+            <div class="col-1"><p>idDipendente</p></div>
+            <div class="col-2"><p>Nome</p></div>
+            <div class="col-2"><p>Cognome</p></div>
+        </div>
 
-            @foreach(Edile.Models.RecordPagamento RP in Model) 
-            
-            { 
-            
-                <div class="row border border-1 border-opacity-50">
-                    <div class="col-2"><p>@RP.Id</p></div>
-                    <div class="col-2"><p>@RP.Data</p></div>
-                    <div class="col-2"><p>@RP.Ammontare €</p></div>
-                    <div class="col-1"><p>@RP.Acconto</p></div>
-                    <div class="col-1"><p>@RP.IdDipendente</p></div>
-                    <div class="col-2"><p>@RP.Nome</p></div>
-                    <div class="col-2"><p>@RP.Cognome</p></div>
-                </div>
-           
-            
-            
-            }
 
-        
+        @foreach (var RecordPagamento in Model.Pagamenti)
+
+        {
+
+            <div class="row border border-1 border-opacity-50">
+                <div class="col-2"><p>@RecordPagamento.Id</p></div>
+                <div class="col-2"><p>@RecordPagamento.Data</p></div>
+                <div class="col-2"><p>@RecordPagamento.Ammontare €</p></div>
+                <div class="col-1"><p>@RecordPagamento.Acconto</p></div>
+                <div class="col-1"><p>@RecordPagamento.IdDipendente</p></div>
+                <div class="col-2"><p>@RecordPagamento.Nome</p></div>
+                <div class="col-2"><p>@RecordPagamento.Cognome</p></div>
+            </div>
+
+
+
+        }
+
+
+
+    </section>
+
+    <h2>DIPENDENTI</h2>
+    <section class="container" aria-labelledby="aspnetTitle">
+        <div class="row">
+            <div class="col-2"><p>ID</p></div>
+            <div class="col-2"><p>Nome</p></div>
+            <div class="col-2"><p>Cognome</p></div>
+            <div class="col-1"><p>CF</p></div>
+            <div class="col-1"><p>Coniugato</p></div>
+            <div class="col-2"><p>NumeroFigli</p></div>
+            <div class="col-2"><p>Mansione</p></div>
+        </div>
+
+
+        @foreach (var Dipendente in Model.Dipendenti)
+
+        {
+
+            <div class="row border border-1 border-opacity-50">
+                <div class="col-2"><p>@Dipendente.ID</p></div>
+                <div class="col-2"><p>@Dipendente.Nome</p></div>
+                <div class="col-2"><p>@Dipendente.Cognome</p></div>
+                <div class="col-1"><p>@Dipendente.CF</p></div>
+                <div class="col-1"><p>@Dipendente.Coniugato</p></div>
+                <div class="col-2"><p>@Dipendente.NumeroFigli</p></div>
+                <div class="col-2"><p>@Dipendente.Mansione</p></div>
+            </div>
+
+
+
+        }
+
+
 
     </section>
 
