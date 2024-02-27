@@ -13,22 +13,22 @@ namespace Edile.Controllers
     public class HomeController : Controller
     {
 
-         
-         static string connectionString = ConfigurationManager.ConnectionStrings["connectionStringDb"].ToString();
-         SqlConnection conn = new SqlConnection(connectionString);
+
+        static string connectionString = ConfigurationManager.ConnectionStrings["connectionStringDb"].ToString();
+        SqlConnection conn = new SqlConnection(connectionString);
 
 
         public ActionResult Index()
         {
-            
-            List <RecordPagamento> pagamenti = new List<RecordPagamento>();
+
+            List<RecordPagamento> pagamenti = new List<RecordPagamento>();
             List<Dipendente> dipendenti = new List<Dipendente>();
 
             //-----------------PAGAMENTI------------------------------
-            try 
+            try
             {
                 conn.Open();
-                
+
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
@@ -62,16 +62,16 @@ namespace Edile.Controllers
                 }
                 reader.Close();
 
-                
+
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 Response.Write("Errore");
                 Response.Write(ex);
             }
-            finally 
+            finally
             {
-            conn.Close();
+                conn.Close();
             }
 
             //---------------DIPENDENTI--------------------------------
@@ -92,12 +92,12 @@ namespace Edile.Controllers
                     string Nome = reader["Nome"].ToString();
 
                     string Cognome = reader["Cognome"].ToString();
-                    string CF = reader["CF"].ToString().Substring(0,4);
+                    string CF = reader["CF"].ToString().Substring(0, 4);
 
                     bool Coniugato = reader["Coniugato"].ToString() == "True" ? true : false;
                     int NumFigli = int.Parse(reader["NumeroFigli"].ToString());
                     string Mansione = reader["Mansione"].ToString();
-                   
+
 
                     Dipendente Dipendente = new Dipendente(IdDipendente, Nome, Cognome, CF, Coniugato, NumFigli, Mansione);
 
@@ -126,7 +126,7 @@ namespace Edile.Controllers
             vm.Pagamenti = pagamenti;
             vm.Dipendenti = dipendenti;
             return View(vm);
-           
+
 
         }
 
@@ -146,7 +146,8 @@ namespace Edile.Controllers
 
 
         [HttpGet]
-        public ActionResult EditPerson(int id) {
+        public ActionResult EditPerson(int id)
+        {
 
             try
             {
@@ -196,12 +197,13 @@ namespace Edile.Controllers
 
 
             return RedirectToAction("Index");
-           // return View(DipendenteSelezionato);
+            // return View(DipendenteSelezionato);
         }
 
         [HttpPost]
 
-        public ActionResult EditPerson(Dipendente DipendenteUpdate) {
+        public ActionResult EditPerson(Dipendente DipendenteUpdate)
+        {
 
             try
             {
@@ -223,7 +225,7 @@ namespace Edile.Controllers
 
                 cmd.ExecuteNonQuery();
 
-               
+
 
 
             }
@@ -239,7 +241,93 @@ namespace Edile.Controllers
 
             return RedirectToAction("Index");
         }
-    }
 
+
+        [HttpGet]
+        public ActionResult DeletePerson(int id)
+        {
+
+            try
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = $"SELECT * FROM Dipendenti WHERE IdDipendente = {id}";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string IdDipendente = reader["IdDipendente"].ToString();
+                    string Nome = reader["Nome"].ToString();
+
+                    string Cognome = reader["Cognome"].ToString();
+                    string CF = reader["CF"].ToString();
+
+                    bool Coniugato = reader["Coniugato"].ToString() == "True" ? true : false;
+                    int NumFigli = int.Parse(reader["NumeroFigli"].ToString());
+                    string Mansione = reader["Mansione"].ToString();
+
+
+                    Dipendente DipendenteSelezionato = new Dipendente(IdDipendente, Nome, Cognome, CF, Coniugato, NumFigli, Mansione);
+
+                    return View(DipendenteSelezionato);
+
+
+
+                }
+                reader.Close();
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
+
+            return RedirectToAction("Index");
+            // return View(DipendenteSelezionato);
+        }
+
+
+
+
+        [HttpPost]
+
+        public ActionResult DeletePerson(Dipendente DipendenteDelete)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = $"DELETE FROM Dipendenti WHERE IdDipendente = {DipendenteDelete.ID}";
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return RedirectToAction("Index");
+
+        }
+    }
     
 }
