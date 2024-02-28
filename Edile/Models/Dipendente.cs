@@ -20,6 +20,9 @@ namespace Edile.Models
 
         public string Mansione { get; set; }
 
+        [ScaffoldColumn(false)]
+        public string fullId => $"{ID} {Nome} {Cognome}";
+
         public Dipendente() { }
 
         public Dipendente(string ID, string Nome, string Cognome, string CF, bool Coniugato, int NumeroFigli, string Mansione) 
@@ -35,6 +38,8 @@ namespace Edile.Models
 
         
         } 
+
+
 
 
     }

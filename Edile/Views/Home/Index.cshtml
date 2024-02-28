@@ -65,8 +65,8 @@
                 <div class="col"><p>@Dipendente.Coniugato</p></div>
                 <div class="col"><p>@Dipendente.NumeroFigli</p></div>
                 <div class="col"><p>@Dipendente.Mansione</p></div>
-                <div class="col">@Html.ActionLink("Edit Person", "EditPerson", new { id = Dipendente.ID })</div>
-                <div class="col">@Html.ActionLink("Delete Person", "DeletePerson", new { id = Dipendente.ID })</div>
+                <div class="col">@Html.ActionLink("Edit Person", "EditPerson", new { id = Dipendente.ID }, new { @class = "btn btn-info" })</div>
+                <div class="col">@Html.ActionLink("Delete Person", "DeletePerson", new { id = Dipendente.ID }, new { @class = "btn btn-danger" })</div>
             </div>
 
 

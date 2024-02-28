@@ -243,6 +243,8 @@ namespace Edile.Controllers
         }
 
 
+        /*
+
         [HttpGet]
         public ActionResult DeletePerson(int id)
         {
@@ -299,11 +301,11 @@ namespace Edile.Controllers
         }
 
 
+        */
 
+        [HttpGet]
 
-        [HttpPost]
-
-        public ActionResult DeletePerson(Dipendente DipendenteDelete)
+        public ActionResult DeletePerson(int id)
         {
 
             try
@@ -311,7 +313,7 @@ namespace Edile.Controllers
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = $"DELETE FROM Dipendenti WHERE IdDipendente = {DipendenteDelete.ID}";
+                cmd.CommandText = $"DELETE FROM Dipendenti WHERE IdDipendente = {id}";
                 cmd.ExecuteNonQuery();
 
             }

@@ -69,6 +69,49 @@ namespace Edile.Controllers
 
         public ActionResult Create()
         {
+            List<Dipendente> dipendenti = new List<Dipendente>();
+
+            try
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT * FROM Dipendenti";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string IdDipendente = reader["IdDipendente"].ToString();
+                    string Nome = reader["Nome"].ToString();
+                    string Cognome = reader["Cognome"].ToString();
+                    string CF = reader["CF"].ToString().Substring(0, 4);
+                    bool Coniugato = reader["Coniugato"].ToString() == "True" ? true : false;
+                    int NumFigli = int.Parse(reader["NumeroFigli"].ToString());
+                    string Mansione = reader["Mansione"].ToString();
+
+                    Dipendente Dipendente = new Dipendente(IdDipendente, Nome, Cognome, CF, Coniugato, NumFigli, Mansione);
+
+                    dipendenti.Add(Dipendente);
+
+                }
+                reader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            SelectList list = new SelectList(dipendenti, "ID", "fullId");
+            ViewBag.DropdownList = list;
             return View();
         }
 
@@ -106,7 +149,7 @@ namespace Edile.Controllers
             }
 
             ModelState.Clear();
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

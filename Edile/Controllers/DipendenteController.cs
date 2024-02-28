@@ -24,7 +24,7 @@ namespace Edile.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create() { return View(); }
+        public ActionResult Create(){return View(); }
 
         [HttpPost]
         public ActionResult Create(Dipendente D) 
@@ -57,7 +57,7 @@ namespace Edile.Controllers
 
 
             ModelState.Clear();
-            return View(); 
+            return RedirectToAction("Index", "Home");
         }
     }
 }
